@@ -1,0 +1,61 @@
+// Last updated: 7/9/2026, 2:16:42 PM
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> res = new ArrayList<>();
+
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], i);
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+
+            for (int j = 0; j <= word.length(); j++) {
+
+                String left = word.substring(0, j);
+                String right = word.substring(j);
+
+                // Case 1
+                if (isPalindrome(left)) {
+                    String revRight = new StringBuilder(right).reverse().toString();
+
+                    if (map.containsKey(revRight) &&
+                        map.get(revRight) != i) {
+
+                        res.add(Arrays.asList(map.get(revRight), i));
+                    }
+                }
+
+                // Case 2
+                if (j != word.length() && isPalindrome(right)) {
+                    String revLeft = new StringBuilder(left).reverse().toString();
+
+                    if (map.containsKey(revLeft) &&
+                        map.get(revLeft) != i) {
+
+                        res.add(Arrays.asList(i, map.get(revLeft)));
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
+
+    private boolean isPalindrome(String s) {
+        int l = 0;
+        int r = s.length() - 1;
+
+        while (l < r) {
+            if (s.charAt(l++) != s.charAt(r--)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
