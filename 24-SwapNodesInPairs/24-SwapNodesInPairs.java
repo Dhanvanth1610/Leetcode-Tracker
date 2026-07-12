@@ -1,0 +1,24 @@
+// Last updated: 7/12/2026, 6:34:01 PM
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        
+        ListNode prev = dummy;
+        
+        while (prev.next != null && prev.next.next != null) {
+            ListNode first = prev.next;
+            ListNode second = prev.next.next;
+            
+            // Swapping
+            first.next = second.next;
+            second.next = first;
+            prev.next = second;
+            
+            // Move prev forward
+            prev = first;
+        }
+        
+        return dummy.next;
+    }
+}
